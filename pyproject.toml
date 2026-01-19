@@ -1,17 +1,18 @@
 [project]
 name = "napari-rosettasciio"
 dynamic = ["version"]
-description = "A plugin to use the Rosetta Reader in Napari"
+description = "A napari plugin to read and write scientific data formats using RosettaSciIO"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
-  {name = "jules-vanaret"},
+  {name = "Jules Vanaret"},
   {email = "jules.vanaret@epfl.ch"},
 ]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Framework :: napari",
     "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
@@ -21,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Image Processing",
 ]
 requires-python = ">=3.10"
@@ -29,13 +31,22 @@ requires-python = ">=3.10"
 # or any other Qt bindings directly (e.g. PyQt5, PySide2).
 # See best practices: https://napari.org/stable/plugins/building_a_plugin/best_practices.html
 dependencies = [
-    "numpy",
+    "numpy>=1.22",
+    "rosettasciio>=0.1",
 ]
 
 [project.optional-dependencies]
 # Allow easily installation with the full, default napari installation
 # (including Qt backend) using napari-rosettasciio[all].
-all = ["napari[all]"]
+all = ["napari[all]", "rosettasciio[all]"]
+
+# Add support for specific file formats
+hdf5 = ["rosettasciio[hdf5]"]
+tiff = ["rosettasciio[tiff]"]
+image = ["rosettasciio[image]"]
+zspy = ["rosettasciio[zspy]"]
+mrcz = ["rosettasciio[mrcz]"]
+usid = ["rosettasciio[usid]"]
 
 [dependency-groups]
 dev = [
