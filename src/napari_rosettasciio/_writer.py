@@ -35,6 +35,11 @@ _NAPARI_NATIVE_FORMATS = {
     ".npy",  # NumPy arrays
 }
 
+# Formats with special requirements that we don't support
+_UNSUPPORTED_FORMATS = {
+    ".mrcz",  # MRCZ only supports 3D data, too limiting for general use
+}
+
 # Build a mapping of file extensions to rsciio plugins that support writing
 _EXTENSION_TO_WRITER = {}
 for plugin in rsciio.IO_PLUGINS:
@@ -42,8 +47,11 @@ for plugin in rsciio.IO_PLUGINS:
         for ext in plugin["file_extensions"]:
             if not ext.startswith("."):
                 ext = f".{ext}"
-            # Skip formats that napari handles natively
-            if ext.lower() in _NAPARI_NATIVE_FORMATS:
+            # Skip formats that napari handles natively or we don't support
+            if (
+                ext.lower() in _NAPARI_NATIVE_FORMATS
+                or ext.lower() in _UNSUPPORTED_FORMATS
+            ):
                 continue
             # Store plugin API path for each extension
             _EXTENSION_TO_WRITER[ext.lower()] = plugin["api"]
@@ -183,7 +191,16 @@ def _layer_to_signal(data: np.ndarray, meta: dict, default_name: str = "data"):
             "Signal": {"signal_type": ""},
         },
         "original_metadata": {},
-        "attributes": {},
+        "attributes": {
+            "_lazy": False,  # Data is already loaded in napari
+        },
+        "tmp_parameters": {},  # Required by RosettaSciIO writers
+        "package_info": {  # Package information for file metadata
+            "name": "napari-rosettasciio",
+            "version": "0.1.0",
+        },
+        "learning_results": {},  # Required by some formats
+        "models": {},  # Required by some formats
     }
 
     # Convert napari scale and axis information to RosettaSciIO axes
