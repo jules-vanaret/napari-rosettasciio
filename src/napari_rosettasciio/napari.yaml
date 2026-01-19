@@ -1,0 +1,28 @@
+name: napari-rosettasciio
+display_name: Rosettasciio Reader
+# use 'hidden' to remove plugin from napari hub search results
+visibility: public
+# see https://napari.org/stable/plugins/technical_references/manifest.html#fields for valid categories
+# categories: []
+contributions:
+  commands:
+    - id: napari-rosettasciio.get_reader
+      python_name: napari_rosettasciio._reader:napari_get_reader
+      title: Open data with Rosettasciio Reader
+    - id: napari-rosettasciio.write_multiple
+      python_name: napari_rosettasciio._writer:write_multiple
+      title: Save multi-layer data with Rosettasciio Reader
+    - id: napari-rosettasciio.write_single_image
+      python_name: napari_rosettasciio._writer:write_single_image
+      title: Save image data with Rosettasciio Reader
+  readers:
+    - command: napari-rosettasciio.get_reader
+      accepts_directories: false
+      filename_patterns: ['*.npy']
+  writers:
+    - command: napari-rosettasciio.write_multiple
+      layer_types: ['image*','labels*']
+      filename_extensions: []
+    - command: napari-rosettasciio.write_single_image
+      layer_types: ['image']
+      filename_extensions: ['.npy']
