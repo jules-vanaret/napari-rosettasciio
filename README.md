@@ -3,8 +3,6 @@
 [![License MIT](https://img.shields.io/pypi/l/napari-rosettasciio.svg?color=green)](https://github.com/jules-vanaret/napari-rosettasciio/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/napari-rosettasciio.svg?color=green)](https://pypi.org/project/napari-rosettasciio)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-rosettasciio.svg?color=green)](https://python.org)
-[![tests](https://github.com/jules-vanaret/napari-rosettasciio/workflows/tests/badge.svg)](https://github.com/jules-vanaret/napari-rosettasciio/actions)
-[![codecov](https://codecov.io/gh/jules-vanaret/napari-rosettasciio/branch/main/graph/badge.svg)](https://codecov.io/gh/jules-vanaret/napari-rosettasciio)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-rosettasciio)](https://napari-hub.org/plugins/napari-rosettasciio)
 [![npe2](https://img.shields.io/badge/plugin-npe2-blue?link=https://napari.org/stable/plugins/index.html)](https://napari.org/stable/plugins/index.html)
 
@@ -37,12 +35,6 @@ You can install `napari-rosettasciio` via [pip]:
 pip install napari-rosettasciio
 ```
 
-If napari is not already installed, you can install `napari-rosettasciio` with napari and Qt via:
-
-```bash
-pip install "napari-rosettasciio[all]"
-```
-
 ### Optional Dependencies
 
 To enable support for specific file formats, you can install with optional dependencies:
@@ -50,9 +42,6 @@ To enable support for specific file formats, you can install with optional depen
 ```bash
 # For HDF5 formats (HyperSpy, EMD, NeXus, etc.)
 pip install "napari-rosettasciio[hdf5]"
-
-# For TIFF support
-pip install "napari-rosettasciio[tiff]"
 
 # For image formats (PNG, JPEG, etc.)
 pip install "napari-rosettasciio[image]"
@@ -82,10 +71,10 @@ The plugin preserves metadata from the original files, including:
 
 This metadata is stored in the layer metadata and can be preserved when saving to formats that support it (e.g., HDF5, Zarr).
 
-## Contributing
+### Format Limitations
 
-Contributions are very welcome. Tests can be run with [tox], please ensure
-the coverage at least stays the same before you submit a pull request.
+Some formats have specific requirements:
+- **MRCZ** (`.mrcz`): Only supports 3D volumetric data. This format is currently excluded from the writer capabilities as it cannot handle 2D images.
 
 ## License
 
@@ -106,6 +95,5 @@ We are grateful to all contributors to these projects.
 [RosettaSciIO documentation]: https://hyperspy.org/rosettasciio/supported_formats/index.html
 [HyperSpy]: https://hyperspy.org
 [MIT]: http://opensource.org/licenses/MIT
-[tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [file an issue]: https://github.com/jules-vanaret/napari-rosettasciio/issues
