@@ -7,37 +7,80 @@
 [![codecov](https://codecov.io/gh/jules-vanaret/napari-rosettasciio/branch/main/graph/badge.svg)](https://codecov.io/gh/jules-vanaret/napari-rosettasciio)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-rosettasciio)](https://napari-hub.org/plugins/napari-rosettasciio)
 [![npe2](https://img.shields.io/badge/plugin-npe2-blue?link=https://napari.org/stable/plugins/index.html)](https://napari.org/stable/plugins/index.html)
-[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-purple.json)](https://github.com/copier-org/copier)
 
-A plugin to use the Rosetta Reader in Napari
+A napari plugin to read and write scientific data formats using [RosettaSciIO].
 
 ----------------------------------
 
-This [napari] plugin was generated with [copier] using the [napari-plugin-template] (None).
+## Overview
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/napari-plugin-template#getting-started
+This plugin integrates [RosettaSciIO] with [napari], enabling napari to read and write a wide range of scientific data formats, particularly those used in electron microscopy and spectroscopy.
 
-and review the napari docs for plugin developers:
-https://napari.org/stable/plugins/index.html
--->
+**Note:** This plugin focuses on scientific data formats not natively supported by napari. Standard image formats (PNG, JPEG, TIFF, BMP, GIF) and NumPy arrays are handled by napari's built-in readers and are excluded from this plugin to avoid conflicts.
+
+### Supported File Formats
+
+RosettaSciIO supports many scientific data formats including:
+
+- **HDF5-based formats**: HyperSpy (`.hspy`), EMD (`.emd`), NeXus (`.nxs`), USID
+- **Microscopy formats**: Digital Micrograph (`.dm3`, `.dm4`), MRC (`.mrc`), FEI/TIA (`.ser`, `.emi`)
+- **Spectroscopy formats**: EDAX (`.spc`, `.spd`), Bruker (`.bcf`), Renishaw WiRE (`.wdf`)
+- And many more specialized scientific formats...
+
+For a complete list of supported formats, see the [RosettaSciIO documentation].
 
 ## Installation
 
 You can install `napari-rosettasciio` via [pip]:
 
-```
+```bash
 pip install napari-rosettasciio
 ```
 
 If napari is not already installed, you can install `napari-rosettasciio` with napari and Qt via:
 
-```
+```bash
 pip install "napari-rosettasciio[all]"
 ```
 
+### Optional Dependencies
 
+To enable support for specific file formats, you can install with optional dependencies:
+
+```bash
+# For HDF5 formats (HyperSpy, EMD, NeXus, etc.)
+pip install "napari-rosettasciio[hdf5]"
+
+# For TIFF support
+pip install "napari-rosettasciio[tiff]"
+
+# For image formats (PNG, JPEG, etc.)
+pip install "napari-rosettasciio[image]"
+
+# For Zarr-based formats
+pip install "napari-rosettasciio[zspy]"
+
+# For all formats
+pip install "napari-rosettasciio[all]"
+```
+
+## Usage
+
+Once installed, the plugin will automatically register with napari. You can then:
+
+1. **Open files**: Use `File > Open` or drag and drop files into napari
+2. **Save files**: Use `File > Save` and select the desired format
+
+The plugin will automatically detect and use the appropriate reader/writer based on the file extension.
+
+### Preserving Metadata
+
+The plugin preserves metadata from the original files, including:
+- Axes scales and units
+- Original metadata structures
+- Custom attributes
+
+This metadata is stored in the layer metadata and can be preserved when saving to formats that support it (e.g., HDF5, Zarr).
 
 ## Contributing
 
@@ -47,24 +90,22 @@ the coverage at least stays the same before you submit a pull request.
 ## License
 
 Distributed under the terms of the [MIT] license,
-"napari-rosettasciio" is free and open source software
+"napari-rosettasciio" is free and open source software.
 
 ## Issues
 
 If you encounter any problems, please [file an issue] along with a detailed description.
 
-[napari]: https://github.com/napari/napari
-[copier]: https://copier.readthedocs.io/en/stable/
-[@napari]: https://github.com/napari
-[MIT]: http://opensource.org/licenses/MIT
-[BSD-3]: http://opensource.org/licenses/BSD-3-Clause
-[GNU GPL v3.0]: http://www.gnu.org/licenses/gpl-3.0.txt
-[GNU LGPL v3.0]: http://www.gnu.org/licenses/lgpl-3.0.txt
-[Apache Software License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
-[Mozilla Public License 2.0]: https://www.mozilla.org/media/MPL/2.0/index.txt
-[napari-plugin-template]: https://github.com/napari/napari-plugin-template
+## Acknowledgements
+
+This plugin is built on top of [RosettaSciIO], which originated from the [HyperSpy] project. 
+We are grateful to all contributors to these projects.
 
 [napari]: https://github.com/napari/napari
+[RosettaSciIO]: https://github.com/hyperspy/rosettasciio
+[RosettaSciIO documentation]: https://hyperspy.org/rosettasciio/supported_formats/index.html
+[HyperSpy]: https://hyperspy.org
+[MIT]: http://opensource.org/licenses/MIT
 [tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
-[PyPI]: https://pypi.org/
+[file an issue]: https://github.com/jules-vanaret/napari-rosettasciio/issues
