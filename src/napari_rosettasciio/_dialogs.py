@@ -5,7 +5,13 @@ from qtpy.QtWidgets import (
     QRadioButton,
     QVBoxLayout,
 )
-from napari.qt import get_current_stylesheet
+
+try:
+    from napari.qt import get_current_stylesheet
+except ImportError:
+
+    def get_current_stylesheet():
+        return ""
 
 
 class ComplexDialog(QDialog):
