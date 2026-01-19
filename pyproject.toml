@@ -38,11 +38,10 @@ dependencies = [
 [project.optional-dependencies]
 # Allow easily installation with the full, default napari installation
 # (including Qt backend) using napari-rosettasciio[all].
-all = ["napari[all]", "rosettasciio[all]"]
+all = ["rosettasciio[all]"]
 
 # Add support for specific file formats
 hdf5 = ["rosettasciio[hdf5]"]
-tiff = ["rosettasciio[tiff]"]
 image = ["rosettasciio[image]"]
 zspy = ["rosettasciio[zspy]"]
 mrcz = ["rosettasciio[mrcz]"]
